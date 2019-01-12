@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">StudyToon - Easy Korean Learning</string>
+    <string name="scrollYes">mScrollYes</string>
+    <string name="tower_of_god_description">What do you desire? Money and wealth? Honor and pride?
+        Authority and power? Revenge?
+        Or something that transcends them all? Whatever you desire—its here.</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="Title">Website Title</string>
+    <string name="Description">Website Description</string>
+    <string name="Logo">Website Logo</string>
+    <string name="scroll_linked">Scrolling Is Linked</string>
+    <string name="scroll_unlink">Scrolling Is Not Linked</string>
+    <string name="page_linked">Page Turning Is Linked</string>
+    <string name="page_unlinked">Page Turning Is Linked</string>
+
+
+
+</resources>

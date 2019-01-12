@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".WebToonActivity">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/english_web_view_toolbar"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:background="@color/colorBackground">
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+        <Button
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:id="@+id/window_image_english"
+            />
+        <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" >
+    </Space>
+        <Button
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:id="@+id/english_scroll_toggle"
+            />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+        <Button
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:id="@+id/english_page_toggle"
+            />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+        <Button
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:id="@+id/english_back_button"
+            />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+    </LinearLayout>
+    <cameratest.themaestrochef.koreanenglishwebtune.ObservableWebView
+        android:id="@+id/english_web_view"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_height="0dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/korean_web_view_toolbar"
+        android:background="@color/colorBackground">
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+        <Button
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:id="@+id/window_image_korean"
+            />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+        <Button
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:id="@+id/korean_scroll_toggle"
+            /><Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" >
+    </Space>
+        <Button
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:id="@+id/korean_page_toggle"
+            />
+        <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" >
+    </Space>
+        <Button
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:id="@+id/korean_back_button"
+            />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+    </LinearLayout>
+    <cameratest.themaestrochef.koreanenglishwebtune.ObservableWebView
+        android:id="@+id/korean_web_view"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        />
+
+
+
+</LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
