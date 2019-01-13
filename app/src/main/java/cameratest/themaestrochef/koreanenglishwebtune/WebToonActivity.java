@@ -66,7 +66,7 @@ public class WebToonActivity extends AppCompatActivity {
     boolean englishWebviewLoadingInProcess;
     boolean koreanWebviewLoadingInProcess;
     WebViewClient webViewClient = new MyWebViewClient() {
-        //TODO fix bug where it crashes if touched when loading. 
+        //TODO fix bug where it crashes if touched when loading.
         @Override
         public void onPageFinished(WebView view, String url) {
             //loadingInprocess set to false so we it can read touch
