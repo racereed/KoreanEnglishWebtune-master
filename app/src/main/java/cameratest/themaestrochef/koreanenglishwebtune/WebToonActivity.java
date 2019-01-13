@@ -1,6 +1,5 @@
 package cameratest.themaestrochef.koreanenglishwebtune;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -10,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
 
 public class WebToonActivity extends AppCompatActivity {
     private ObservableWebView englishWebView;
-    static  int iWebClientCounter=0;
+//    static  int iWebClientCounter=0;
     private ObservableWebView koreanWebView;
     private MainAdapter mMainAdapter;
     boolean koreanViewIsMinimized;
@@ -36,7 +34,7 @@ public class WebToonActivity extends AppCompatActivity {
     Button koreanPageLink;
     LinearLayout englishWebViewToolbar;
     LinearLayout koreanWebViewToolbar;
-
+    boolean pageChangeLinked = true;
     int counter = 1;
     int scrollXEnglish;
     int scrollYEnglish;
@@ -59,19 +57,23 @@ public class WebToonActivity extends AppCompatActivity {
     int[] towerOfGodMissingEpisodesArray = new int[]{80};
     int[] theSecretofAngelMissingEpisode = new int[]{0};
 
-    private  final static String LAST_ENGLISH_WEBVIEW_URL  = "cameratest.themaestrochef.koreanenglishwebtune.LASTWEBVIEWURL";
+    private  final static String LAST_ENGLISH_WEBVIEW_URL  = "cameratest.themaestrochef.koreanenglishwebtune.ENGLISHLASTWEBVIEWURL";
+    private  final static String LAST_KOREAN_WEBVIEW_URL  = "cameratest.themaestrochef.koreanenglishwebtune.KOREANWEBVIEWURL";
     String savedEnglishUrl;
     String englishUrlKey;
-
     String savedKoreanURL;
-    String koreanUrlkey = "koreanKey"+ Integer.toString(position);
-
+    String koreanUrlkey;
+    boolean englishWebviewLoadingInProcess;
+    boolean koreanWebviewLoadingInProcess;
     WebViewClient webViewClient = new MyWebViewClient() {
-        //TODO fix down here where it will continue to reload if I touch the koreanwebview before the enlgishwebview loads from saved state.
+        //TODO fix bug where it crashes if touched when loading. 
         @Override
         public void onPageFinished(WebView view, String url) {
-            iWebClientCounter++;
-            if (iWebClientCounter > 0 && koreanWebViewTouched ) {
+            //loadingInprocess set to false so we it can read touch
+            englishWebviewLoadingInProcess=false;
+            koreanWebviewLoadingInProcess = false;
+            //            iWebClientCounter++;
+            if ( koreanWebViewTouched && pageChangeLinked) {
                 if(koreanWebView.getUrl().contains("no=")) {
 
                     String koreanEpisodeNumber[] =  koreanWebView.getUrl().substring(koreanWebView.getUrl().indexOf("no=") + 3).split("&");
@@ -127,7 +129,7 @@ public class WebToonActivity extends AppCompatActivity {
 
                 }
             }
-            if (iWebClientCounter > 0 & englishWebViewTouched) {
+            if (englishWebViewTouched && pageChangeLinked) {
                 if(englishWebView.getUrl().contains("episode_no=")) {
                     String englishEpisodeNumber =  englishWebView.getUrl().substring(englishWebView.getUrl().indexOf("episode_no=" ) + 11);
 
@@ -169,15 +171,17 @@ public class WebToonActivity extends AppCompatActivity {
             }
 
             //onpage finished add Save English URL.
-            SharedPreferences.Editor editor = getSharedPreferences(LAST_ENGLISH_WEBVIEW_URL, MODE_PRIVATE).edit();
+            SharedPreferences.Editor englishEditor = getSharedPreferences(LAST_ENGLISH_WEBVIEW_URL, MODE_PRIVATE).edit();
+            SharedPreferences.Editor koreanEditor = getSharedPreferences(LAST_KOREAN_WEBVIEW_URL, MODE_PRIVATE).edit();
 
                 englishUrlKey = Integer.toString(position);
-                editor.putString(englishUrlKey, englishWebView.getUrl());
-                editor.apply();
+            englishEditor.putString(englishUrlKey, englishWebView.getUrl());
+            englishEditor.apply();
 
+              koreanUrlkey = Integer.toString(position);
+            koreanEditor.putString(koreanUrlkey, koreanWebView.getUrl());
+            koreanEditor.apply();
 
-              editor.putString(koreanUrlkey, koreanWebView.getUrl());
-              editor.apply();
 
         }
 
@@ -189,7 +193,8 @@ public class WebToonActivity extends AppCompatActivity {
             if (url.contains(newMWebtoon.get(position).getmEnglishUrl()) ||
                     url.equals(savedEnglishUrl) ||
                     url.equals(savedKoreanURL) ||
-                    (url.contains(newMWebtoon.get(position).getmKoreanUrl())))
+                    (url.contains(newMWebtoon.get(position).getmKoreanUrl()))
+                    )
                 return true;
 
 
@@ -206,7 +211,16 @@ public class WebToonActivity extends AppCompatActivity {
         v.loadUrl(url);
 
     }
+    public void linkPages(){
+        counter++;
+        if(counter%2==0){
+            pageChangeLinked = false;
+            Toast.makeText(getApplicationContext(), getString(R.string.page_unlinked),Toast.LENGTH_LONG).show();// Set your own toast  message    }
 
+        } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.page_linked),Toast.LENGTH_LONG).show();// Set your own toast  message    }
+            pageChangeLinked = true;
+    }}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,6 +232,8 @@ public class WebToonActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //show the activity in full screen
         setContentView(R.layout.activity_toon_layout);
+        englishWebviewLoadingInProcess =true;
+        koreanWebviewLoadingInProcess = true;
         koreanWebView = findViewById(R.id.korean_web_view);
         englishWebView = findViewById(R.id.english_web_view);
         newMWebtoon = MainActivity.getmWebtoons();
@@ -243,9 +259,11 @@ public class WebToonActivity extends AppCompatActivity {
         }
 
         Log.v("positionWeb", Integer.toString(position));
-        SharedPreferences prefs = getSharedPreferences(LAST_ENGLISH_WEBVIEW_URL, MODE_PRIVATE);
-            savedEnglishUrl = prefs.getString(Integer.toString(position), "No name defined");
-            savedKoreanURL = prefs.getString((koreanUrlkey), "No name defined");
+        SharedPreferences englishPrefs = getSharedPreferences(LAST_ENGLISH_WEBVIEW_URL, MODE_PRIVATE);
+        SharedPreferences koreanPrefs = getSharedPreferences(LAST_KOREAN_WEBVIEW_URL, MODE_PRIVATE);
+
+        savedEnglishUrl = englishPrefs.getString(Integer.toString(position), "No name defined");
+            savedKoreanURL = koreanPrefs.getString((Integer.toString(position)), "No name defined");
 //            mWebtoons.get(position).setmSavedEnglishURL(savedEnglishUrl);
 
 
@@ -255,7 +273,10 @@ public class WebToonActivity extends AppCompatActivity {
         else{
             loadWebview(englishWebView, savedEnglishUrl, webViewClient);}
         Log.v("SavedEnglishURL", savedEnglishUrl);
-        if (savedKoreanURL.equals("No name defined")){
+
+        loadWebview(koreanWebView, newMWebtoon.get(position).getmKoreanUrl(), webViewClient);
+
+        if (savedEnglishUrl.equals("No name defined")){
             loadWebview(koreanWebView, newMWebtoon.get(position).getmKoreanUrl(), webViewClient);
         }
         else {
@@ -326,18 +347,7 @@ public class WebToonActivity extends AppCompatActivity {
         englishPageLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                counter++;
-                if(counter%2==0){
-                    Toast.makeText(getApplicationContext(), getString(R.string.page_unlinked),Toast.LENGTH_LONG).show();// Set your own toast  message    }
-
-                } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.page_linked),Toast.LENGTH_LONG).show();// Set your own toast  message    }
-
-
-
-                }
-
-
+                linkPages();
             }
         });
 
@@ -415,18 +425,7 @@ public class WebToonActivity extends AppCompatActivity {
         koreanPageLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                counter++;
-                if(counter%2==0){
-                    Toast.makeText(getApplicationContext(), getString(R.string.page_unlinked),Toast.LENGTH_LONG).show();// Set your own toast  message    }
-
-                } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.page_linked),Toast.LENGTH_LONG).show();// Set your own toast  message    }
-
-
-
-                }
-
-
+                linkPages();
             }
         });
         koreanBackButton = findViewById(R.id.korean_back_button);
@@ -463,15 +462,10 @@ public class WebToonActivity extends AppCompatActivity {
 
 
 
-    class MyJavaScriptInterface {
-        @JavascriptInterface
-        public void onUrlChange(String url) {
-            Log.d("hydrated", "onUrlChange" + url);
-            Toast.makeText(getApplicationContext(),"WebViewCientworking",Toast.LENGTH_SHORT).show();// Set your own toast  message    }
 
-        }}
 
 }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
