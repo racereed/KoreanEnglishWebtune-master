@@ -9,8 +9,11 @@ import android.view.MotionEvent;
 import android.webkit.WebView;
 import android.widget.Toast;
 
-public class ObservableWebView extends WebView
-{ private OnScrollChangedCallback mOnScrollChangedCallback;
+public class ObservableWebView extends WebView {
+
+
+
+    private OnScrollChangedCallback mOnScrollChangedCallback;
 
     public ObservableWebView(final Context context)
     {

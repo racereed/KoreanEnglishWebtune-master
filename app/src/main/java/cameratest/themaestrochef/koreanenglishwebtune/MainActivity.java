@@ -1,5 +1,6 @@
 package cameratest.themaestrochef.koreanenglishwebtune;
 
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -25,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Webtoon> mWebtoons = null;
     String title;
 
-    ProgressDialog mProgressDialog;
 
     public static ArrayList<Webtoon> getmWebtoons(){
         return mWebtoons;
@@ -35,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
         mWebtoons = new ArrayList<Webtoon>();
-        //        mWebtoons.add(new Webtoon("https://m.comic.naver.com/webtoon/list.nhn?titleId=131385&no=&seq=", "https://www.webtoons.com/en/fantasy/kubera/list?title_no=83",
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.ic_launcher_round);
+        actionBar.setTitle(R.string.subtitle);
 
         //Kubera
         mWebtoons.add(new Webtoon("https://m.comic.naver.com/webtoon/list.nhn?titleId=131385",null,
@@ -84,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     private class DowloadAsyncTask extends AsyncTask<Void, Void, ArrayList<Webtoon>> {
 
         final ArrayList<Webtoon> mTitle = new ArrayList<Webtoon>();
+        ProgressDialog mProgressDialog;
 
         @Override
         protected void onPreExecute() {

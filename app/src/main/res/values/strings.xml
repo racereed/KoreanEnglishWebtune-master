@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">StudyToon - Easy Korean Learning</string>
+    <string name="app_name">StudyToon</string>
+    <string name="subtitle">Easy Korean Learning</string>
     <string name="scrollYes">mScrollYes</string>
     <string name="tower_of_god_description">What do you desire? Money and wealth? Honor and pride?
         Authority and power? Revenge?
