@@ -66,9 +66,7 @@ public class WebToonActivity extends AppCompatActivity {
     String englishUrlKey;
     String savedKoreanURL;
     String koreanUrlkey;
-    WebViewClient webViewClient2 = new MyWebViewClient(){
 
-    };
     WebViewClient webViewClient = new MyWebViewClient() {
 
         @Override
