@@ -1,6 +1,7 @@
 package cameratest.themaestrochef.koreanenglishwebtune;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,10 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class WebToonActivity extends AppCompatActivity {
     private ObservableWebView englishWebView;
 //    static  int iWebClientCounter=0;
+    boolean webtoonLoading;
     private ObservableWebView koreanWebView;
     private MainAdapter mMainAdapter;
     boolean koreanViewIsMinimized;
@@ -63,15 +66,41 @@ public class WebToonActivity extends AppCompatActivity {
     String englishUrlKey;
     String savedKoreanURL;
     String koreanUrlkey;
-    boolean englishWebviewLoadingInProcess;
-    boolean koreanWebviewLoadingInProcess;
+    WebViewClient webViewClient2 = new MyWebViewClient(){
+
+    };
     WebViewClient webViewClient = new MyWebViewClient() {
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            webtoonLoading = true;
+            koreanWebView.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+
+
+                    return true;
+
+                }
+
+            });
+
+
+
+            englishWebView.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+
+
+                    return true;
+                }
+            });
+
+        }
+
         //TODO fix bug where it crashes if touched when loading.
         @Override
         public void onPageFinished(WebView view, String url) {
             //loadingInprocess set to false so we it can read touch
-            englishWebviewLoadingInProcess=false;
-            koreanWebviewLoadingInProcess = false;
             //            iWebClientCounter++;
             if ( koreanWebViewTouched && pageChangeLinked) {
                 if(koreanWebView.getUrl().contains("no=")) {
@@ -126,8 +155,8 @@ public class WebToonActivity extends AppCompatActivity {
                     Log.v("123koreanepisodenumber", "onPageFinished: " + koreanEpisodeNumber[0]);
                     Log.v("123kenglishURL", "onPageFinished: " + englishURL);
                     koreanWebViewTouched =false;
-
                 }
+
             }
             if (englishWebViewTouched && pageChangeLinked) {
                 if(englishWebView.getUrl().contains("episode_no=")) {
@@ -168,6 +197,8 @@ public class WebToonActivity extends AppCompatActivity {
                     Log.v("123englishepisodenumber", "onPageFinished: " + englishEpisodeNumber);
                     englishWebViewTouched = false;
                 }
+
+
             }
 
             //onpage finished add Save English URL.
@@ -183,6 +214,38 @@ public class WebToonActivity extends AppCompatActivity {
             koreanEditor.apply();
 
 
+
+
+            koreanWebView.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    if(event.getAction() == MotionEvent.ACTION_UP){
+                        koreanWebViewTouched = true;
+                        englishWebViewTouched = false;
+
+                        // Do what you want
+                    }
+                    return false;
+
+                }
+
+            });
+
+
+
+            englishWebView.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    if(event.getAction() == MotionEvent.ACTION_UP){
+                        koreanWebViewTouched = false;
+                        englishWebViewTouched = true;
+
+                        // Do what you want
+                    }
+
+                    return false;
+                }
+            });
+
+            webtoonLoading = false;
         }
 
 
@@ -194,7 +257,8 @@ public class WebToonActivity extends AppCompatActivity {
                     url.equals(savedEnglishUrl) ||
                     url.equals(savedKoreanURL) ||
                     (url.contains(newMWebtoon.get(position).getmKoreanUrl()))
-                    )
+
+                     )
                 return true;
 
 
@@ -211,6 +275,7 @@ public class WebToonActivity extends AppCompatActivity {
         v.loadUrl(url);
 
     }
+
     public void linkPages(){
         counter++;
         if(counter%2==0){
@@ -232,11 +297,11 @@ public class WebToonActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //show the activity in full screen
         setContentView(R.layout.activity_toon_layout);
-        englishWebviewLoadingInProcess =true;
-        koreanWebviewLoadingInProcess = true;
+
         koreanWebView = findViewById(R.id.korean_web_view);
         englishWebView = findViewById(R.id.english_web_view);
         newMWebtoon = MainActivity.getmWebtoons();
+
         Log.v("click Webtoon", "works");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -263,7 +328,7 @@ public class WebToonActivity extends AppCompatActivity {
         SharedPreferences koreanPrefs = getSharedPreferences(LAST_KOREAN_WEBVIEW_URL, MODE_PRIVATE);
 
         savedEnglishUrl = englishPrefs.getString(Integer.toString(position), "No name defined");
-            savedKoreanURL = koreanPrefs.getString((Integer.toString(position)), "No name defined");
+        savedKoreanURL = koreanPrefs.getString((Integer.toString(position)), "No name defined");
 //            mWebtoons.get(position).setmSavedEnglishURL(savedEnglishUrl);
 
 
@@ -283,36 +348,6 @@ public class WebToonActivity extends AppCompatActivity {
             loadWebview(koreanWebView, savedKoreanURL, webViewClient);
         }
         Log.v("SavedKoreanURL", savedKoreanURL);
-
-
-
-
-        koreanWebView.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_UP){
-                    koreanWebViewTouched = true;
-                    englishWebViewTouched = false;
-
-                    // Do what you want
-                }
-                return false;
-            }
-        });
-
-
-
-        englishWebView.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_UP){
-                    koreanWebViewTouched = false;
-                    englishWebViewTouched = true;
-
-                    // Do what you want
-                }
-
-                return false;
-            }
-        });
 
 
 
@@ -458,29 +493,7 @@ public class WebToonActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Click Listener Is Working",Toast.LENGTH_LONG).show();// Set your own toast  message    }
             }
         });
-
-
-
-
-
-
 }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //TODO may or may not need to uncomment out these lines.
 
-        // iWebClientCounter =0;
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        //TODO may or may not need to uncomment out these lines.
-
-        // iWebClientCounter =0;
-
-    }
 }
