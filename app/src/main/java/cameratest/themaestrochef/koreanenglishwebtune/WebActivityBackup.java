@@ -49,7 +49,7 @@ public class WebActivityBackup {
 ////    String englishEpisodeGuideUrl = newMWebtoon.get(0).getmEnglishUrl();
 //        String koreanUrl;
 //
-//        WebViewClient webViewClient = new MyWebViewClient() {
+//        WebViewClient korWebviewClient = new MyWebViewClient() {
 //
 //            @Override
 //            public void onPageFinished(WebView view, String url) {
@@ -125,8 +125,8 @@ public class WebActivityBackup {
 //            }
 //        };
 //
-//        public void loadWebview (ObservableWebView v, String url, android.webkit.WebViewClient webViewClient){
-//            v.setWebViewClient(webViewClient);
+//        public void loadWebview (ObservableWebView v, String url, android.webkit.WebViewClient korWebviewClient){
+//            v.setWebViewClient(korWebviewClient);
 //            v.getSettings().setJavaScriptEnabled(true);
 //            v.getSettings().setDomStorageEnabled(true);
 //            v.setOverScrollMode(ObservableWebView.OVER_SCROLL_NEVER);
@@ -150,8 +150,8 @@ public class WebActivityBackup {
 //                //The key argument here must match that used in the other activity
 //            }
 //
-//            loadWebview (koreanWebView, newMWebtoon.get(position).getmKoreanUrl(), webViewClient);
-//            loadWebview(englishWebView, newMWebtoon.get(position).getmEnglishUrl(), webViewClient);
+//            loadWebview (koreanWebView, newMWebtoon.get(position).getmKoreanUrl(), korWebviewClient);
+//            loadWebview(englishWebView, newMWebtoon.get(position).getmEnglishUrl(), korWebviewClient);
 //
 //
 //            koreanWebView.setOnTouchListener(new View.OnTouchListener() {
@@ -167,8 +167,8 @@ public class WebActivityBackup {
 //            });
 //
 //
-//            webViewClient.onPageFinished(koreanWebView, koreanEpisodeGuideUrl);
-//            webViewClient.onPageFinished(englishWebView, englishEpisodeGuideUrl);
+//            korWebviewClient.onPageFinished(koreanWebView, koreanEpisodeGuideUrl);
+//            korWebviewClient.onPageFinished(englishWebView, englishEpisodeGuideUrl);
 //
 //            englishWebView.setOnTouchListener(new View.OnTouchListener() {
 //                public boolean onTouch(View v, MotionEvent event) {
