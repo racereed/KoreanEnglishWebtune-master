@@ -3,12 +3,15 @@ package cameratest.themaestrochef.koreanenglishwebtune;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -54,34 +57,64 @@ public class MainActivity extends AppCompatActivity {
                 "https://shared-comic.pstatic.net/thumb/webtoon/183559/thumbnail/title_thumbnail_20160516123017_t125x101.jpg",
                 null));
 
-        //The secret of angel
-        mWebtoons.add(new Webtoon("https://m.comic.naver.com/webtoon/list.nhn?titleId=703846", null,
-                "https://www.webtoons.com/id/drama/goddess/list?title_no=1392",
-                "https://www.webtoons.com/id/drama/goddess/ep32/viewer?title_no=1392&episode_no=",
-                "https://shared-comic.pstatic.net/thumb/webtoon/703846/thumbnail/thumbnail_IMAG06_aa715a18-fe51-4adf-b21b-5fc253ed3f32.jpg",
-                "The Secret of Angel"));
+//WindBreaker
+           mWebtoons.add(new Webtoon("https://m.comic.naver.com/webtoon/list.nhn?titleId=602910", null,
+                "https://m.webtoons.com/en/action/wind-breaker/list?title_no=372",
+                        "https://www.webtoons.com/en/action/wind-breaker/ep-0/viewer?title_no=372&episode_no=",
+                "https://shared-comic.pstatic.net/thumb/webtoon/602910/thumbnail/thumbnail_IMAG19_1f4a6964-1b51-4d64-a84d-f644ca72a5c3.jpg",
+                null));
 
         // 8 days of hannah
         mWebtoons.add(new Webtoon("https://m.comic.naver.com/webtoon/list.nhn?titleId=694805", null, "https://www.webtoons.com/en/romance/days-of-hana/list?title_no=1246&page=1",
-                null,
-                "https://shared-comic.pstatic.net/thumb/webtoon/694805/thumbnail/thumbnail_IMAG09_eba71d8b-fa7a-4350-aa6a-748687bdaf80.jpg\n",
+                "https://www.webtoons.com/en/romance/days-of-hana/ep-83/viewer?title_no=1246&episode_no=",
+                "https://shared-comic.pstatic.net/thumb/webtoon/694805/thumbnail/thumbnail_IMAG09_eba71d8b-fa7a-4350-aa6a-748687bdaf80.jpg",
                 null));
         //Noblesse
-        mWebtoons.add(new Webtoon("https://m.comic.naver.com/webtoon/list.nhn?titleId=25455", null, "https://www.webtoons.com/en/fantasy/noblesse/list?title_no=87&page=1",
+        mWebtoons.add(new Webtoon("https://m.comic.naver.com/webtoon/list.nhn?titleId=25455", null, "https://www.webtoons.com/en/fantasy/noblesse/list?title_no=87",
 
-                null,"https://shared-comic.pstatic.net/thumb/webtoon/25455/thumbnail/title_thumbnail_20100614120245_t125x101.jpg",
+                "https://www.webtoons.com/en/fantasy/noblesse/ep-532/viewer?title_no=87&episode_no=","https://shared-comic.pstatic.net/thumb/webtoon/25455/thumbnail/title_thumbnail_20100614120245_t125x101.jpg",
                 null
         ));
 
+        //Super Secret Webtoon
+        mWebtoons.add(new Webtoon("https://m.comic.naver.com/webtoon/list.nhn?titleId=650304", null, "https://www.webtoons.com/en/romance/super-secret/list?title_no=666",
+
+                "https://www.webtoons.com/en/romance/super-secret/epilogue-2/viewer?title_no=666&episode_no=","https://shared-comic.pstatic.net/thumb/webtoon/650304/thumbnail/title_thumbnail_20150323144620_t125x101.jpg",
+                null
+        ));
+        //BitterSweet Life
+        mWebtoons.add(new Webtoon("https://m.comic.naver.com/webtoon/list.nhn?titleId=387518", null,
+                "https://www.webtoons.com/en/slice-of-life/a-bittersweet-life/list?title_no=294",
+                "https://www.webtoons.com/en/slice-of-life/a-bittersweet-life/ep-1-member-introduction-nani/viewer?title_no=294&episode_no=",
+                "https://shared-comic.pstatic.net/thumb/webtoon/387518/thumbnail/title_thumbnail_20120309181013_t125x101.jpg",
+                null
+        ));
+        //Lookism
+        mWebtoons.add(new Webtoon("https://m.comic.naver.com/webtoon/list.nhn?titleId=641253", null,
+                "https://www.webtoons.com/en/drama/lookism/list?title_no=1049",
+                "https://www.webtoons.com/en/drama/lookism/ep-214/viewer?title_no=1049&episode_no=",
+                "https://shared-comic.pstatic.net/thumb/webtoon/641253/thumbnail/title_thumbnail_20141120112141_t125x101.jpg",
+                null
+        ));
+
+        //TheGamer
+        mWebtoons.add(new Webtoon("https://m.comic.naver.com/webtoon/list.nhn?titleId=552960", null,
+                "https://www.webtoons.com/en/fantasy/the-gamer/list?title_no=88",
+                "https://www.webtoons.com/en/fantasy/the-gamer/season-4-ep-63/viewer?title_no=88&episode_no=",
+                "https://shared-comic.pstatic.net/thumb/webtoon/552960/thumbnail/title_thumbnail_20130905153633_t125x101.jpg",
+                null
+        ));
         for (int i = 0; i <mWebtoons.size() ; i++) {
             String koreanEpisodeGuide = mWebtoons.get(i).getmKoreanUrl().replace("list", "detail");
             Log.v("MainActivity100", koreanEpisodeGuide);
             mWebtoons.get(i).setmKoreanEposodeURL(koreanEpisodeGuide);
 
         }
-
-        new DowloadAsyncTask().execute();
-
+        if (DetectConnecton.checkInternetConnection(this)) {
+            new DowloadAsyncTask().execute();
+        }
+        else
+            Toast.makeText(this, R.string.check_internet_string, Toast.LENGTH_SHORT).show();
     }
 
     // DowloadAsyncTask AsyncTask

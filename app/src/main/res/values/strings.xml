@@ -14,7 +14,7 @@
     <string name="scroll_unlink">Scrolling Is Not Linked</string>
     <string name="page_linked">Page Turning Is Linked</string>
     <string name="page_unlinked">Page Turning Is Not Linked</string>
-
+    <string name="check_internet_string">Internet Is Not Connected</string>
 
 
 </resources>

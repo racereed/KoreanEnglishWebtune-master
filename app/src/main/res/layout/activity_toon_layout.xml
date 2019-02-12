@@ -9,7 +9,9 @@ tools:context=".WebToonActivity">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:id="@+id/parent_layout"
+    android:orientation="vertical"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,19 +41,7 @@ tools:context=".WebToonActivity">
             android:layout_height="28dp"
             android:layout_gravity="center"
             android:padding="4dp"
-            android:id="@+id/english_scroll_toggle"
-            />
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" >
-        </Space>
-        <Button
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_gravity="center"
-            android:padding="4dp"
-            android:id="@+id/english_page_toggle"
+            android:id="@+id/english_refresh"
             />
         <Space
             android:layout_width="0dp"
@@ -65,6 +55,20 @@ tools:context=".WebToonActivity">
             android:padding="4dp"
             android:id="@+id/english_back_button"
             />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <Button
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:id="@+id/english_share"
+            />
+
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -105,18 +109,7 @@ tools:context=".WebToonActivity">
             android:layout_height="28dp"
             android:layout_gravity="center"
             android:padding="4dp"
-            android:id="@+id/korean_scroll_toggle"
-            /><Space
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_weight="1" >
-    </Space>
-        <Button
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_gravity="center"
-            android:padding="4dp"
-            android:id="@+id/korean_page_toggle"
+            android:id="@+id/korean_refresh"
             />
         <Space
         android:layout_width="0dp"
@@ -135,6 +128,19 @@ tools:context=".WebToonActivity">
             android:layout_height="1dp"
             android:layout_weight="1" >
         </Space>
+        <Button
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:id="@+id/korean_share"
+            />
+        <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" >
+    </Space>
+
     </LinearLayout>
     <cameratest.themaestrochef.koreanenglishwebtune.ObservableWebView
         android:id="@+id/korean_web_view"
