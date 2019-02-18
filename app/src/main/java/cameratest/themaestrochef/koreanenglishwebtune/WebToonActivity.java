@@ -325,7 +325,7 @@ public class WebToonActivity extends AppCompatActivity {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT,
-                "Hey check out my app at: https://play.google.com/store/apps/details?id=com.google.android.apps.plus");
+                R.string.app_share_string + "https://play.google.com/store/apps/details?id=cameratest.themaestrochef.koreanenglishwebtune");
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
 
@@ -348,8 +348,6 @@ public class WebToonActivity extends AppCompatActivity {
         koreanWebView = findViewById(R.id.korean_web_view);
         englishWebView = findViewById(R.id.english_web_view);
         newMWebtoon = MainActivity.getmWebtoons();
-
-        Log.v("click Webtoon", "works");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             position = extras.getInt("position");
@@ -558,7 +556,6 @@ public class WebToonActivity extends AppCompatActivity {
                     koreanViewIsMinimized = false;
 
                 }
-                Toast.makeText(getApplicationContext(),"Click Listener Is Working",Toast.LENGTH_LONG).show();// Set your own toast  message    }
             }
         });
 
